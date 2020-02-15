@@ -83,3 +83,9 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+# sameera
+*.pdf
+*.png
+.vscode
+*.tex
