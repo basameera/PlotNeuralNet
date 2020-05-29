@@ -55,9 +55,18 @@ PoseExpNetBN = [
              to="(0,0,0)", name_as_caption=name_as_caption),
     to_connection("fmap6", "fmap7"),
 
-    _to_Conv('output', 1, 2, 6, 4, 4, 4, offset="(22.3,0,0)",
+    _to_Conv('fmap8', 1, 2, 6, 4, 4, 4, offset="(22.3,0,0)",
              to="(0,0,0)", name_as_caption=name_as_caption),
-    to_connection("fmap7", "output"),
+    to_connection("fmap7", "fmap8"),
+
+    to_SoftMax("fc1", 512 ,"(1.5,0,0)", "(fmap8-east)", width=1.5, height=3, depth=50, caption="fmap9"),
+    to_connection("fmap8", "fc1"),   
+
+    to_SoftMax("fc2", 256 ,"(1.5,0,0)", "(fc1-east)", width=1.5, height=3, depth=25, caption="fmap10"),
+    to_connection("fc1", "fc2"),
+
+    to_SoftMax("output", 6 ,"(1.5,0,0)", "(fc2-east)", width=1.5, height=3, depth=15, caption="output"),
+    to_connection("fc2", "output"),
 
     to_end()
 ]
